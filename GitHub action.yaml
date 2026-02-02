@@ -1,0 +1,126 @@
+GitHub Actions CI pipeline that runs our full test suite (unit, integration, and E2E), validates our TypeScript build, and🚀 GitDigital Automation Engine — CI Pipeline (.github/workflows/ci.yml)
+
+`yaml
+name: GitDigital Automation Engine CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: TypeScript compile check
+        run: npm run build --if-present
+
+      - name: Run unit tests
+        run: npm run test --if-present
+
+      - name: Start automation engine (background)
+        run: |
+          nohup npm run dev > server.log 2>&1 &
+          sleep 5
+
+      - name: Run integration tests
+        run: npm run test:integration --if-present
+
+      - name: Run E2E tests
+        run: npm run test:e2e --if-present
+
+      - name: Upload server logs (if tests fail)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-logs
+          path: server.log
+`
+
+---
+
+🧠 What This Pipeline Does
+
+1. Runs on:
+- Push to main or dev
+- Pull requests into main or dev
+
+2. Steps:
+
+Checkout
+Pulls your repo.
+
+Node Setup
+Uses Node 20 (best for TS + modern libs).
+
+Install Dependencies
+Runs npm install with caching.
+
+TypeScript Build
+Ensures the code compiles cleanly.
+
+Unit Tests
+Runs your Jest unit tests.
+
+Start Automation Engine
+Boots your Express server in the background.
+
+Integration Tests
+Hits your API endpoints.
+
+E2E Tests
+Runs the full founder‑loan lifecycle.
+
+Upload Logs on Failure
+If anything breaks, you get the server logs as artifacts.
+
+---
+
+🧪 Add Newman for Postman Collection Testing
+
+Then Postman collection to run automatically:
+
+Add this step:
+
+`yaml
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman Collection
+        run: newman run postman/GitDigital-Automation-Engine.postman.json
+`
+
+We can store the collection in:
+
+`
+postman/GitDigital-Automation-Engine.postman.json
+`
+
+---
+
+🧱 Add Matrix Testing (Node 18 + 20)
+
+If you want to test multiple Node versions:
+
+`yaml
+strategy:
+  matrix:
+    node: [18, 20]
+`
+
+---
+
