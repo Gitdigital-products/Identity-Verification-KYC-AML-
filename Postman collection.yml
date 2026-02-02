@@ -1,0 +1,245 @@
+🟦 GitDigital Automation Engine — Postman Collection (v1)
+
+`json
+{
+  "info": {
+    "name": "GitDigital Automation Engine",
+    "postmanid": "f0c1e8c0-1234-4bcd-9f00-automation-engine",
+    "description": "Postman collection for the GitDigital Founder Loan Automation Engine",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "KYC",
+      "item": [
+        {
+          "name": "Submit KYC",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"founderid\": \"F1\",\n  \"loanid\": \"L1\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/kyc/submit",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["kyc", "submit"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Milestones",
+      "item": [
+        {
+          "name": "Submit Milestone 1 (Formation Docs)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"milestoneid\": \"M1FORMATIONDOCS\",\n  \"founderid\": \"F1\",\n  \"loanid\": \"L1\",\n  \"payload\": {\n    \"articlesoforganizationurl\": \"https://example.com/articles.pdf\",\n    \"statefilingreceipt_url\": \"https://example.com/receipt.pdf\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/milestones/submit",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["milestones", "submit"]
+            }
+          }
+        },
+        {
+          "name": "Submit Milestone 2 (Bank Account)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"milestoneid\": \"M2BUSINESSBANKACCOUNT\",\n  \"founderid\": \"F1\",\n  \"loanid\": \"L1\",\n  \"payload\": {\n    \"bankname\": \"Chase\",\n    \"accountlast4\": \"1234\",\n    \"routing_number\": \"021000021\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/milestones/submit",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["milestones", "submit"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Loans",
+      "item": [
+        {
+          "name": "Issue Loan",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanid\": \"L1\",\n  \"founderid\": \"F1\",\n  \"principal_amount\": 500\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/loans/issue",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["loans", "issue"]
+            }
+          }
+        },
+        {
+          "name": "Get Loan",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/loans/L1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["loans", "L1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Disbursements",
+      "item": [
+        {
+          "name": "Get Disbursement",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/disbursements/L1D1FILING_FEE",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["disbursements", "L1D1FILING_FEE"]
+            }
+          }
+        },
+        {
+          "name": "Mark Disbursement Paid",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanid\": \"L1\",\n  \"disbursementid\": \"D1FILINGFEE\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/disbursements/mark-paid",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["disbursements", "mark-paid"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Governance",
+      "item": [
+        {
+          "name": "Resolve Governance Action",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanid\": \"L1\",\n  \"actiontype\": \"GOVERNANCEDECISIONKEEPZEROINTEREST\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/governance/resolve",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["governance", "resolve"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "E2E Flow",
+      "item": [
+        {
+          "name": "1. Submit KYC",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"founderid\": \"F1\", \"loanid\": \"L1\" }"
+            },
+            "url": "http://localhost:3000/kyc/submit"
+          }
+        },
+        {
+          "name": "2. Issue Loan",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"loanid\": \"L1\", \"founderid\": \"F1\", \"principal_amount\": 500 }"
+            },
+            "url": "http://localhost:3000/loans/issue"
+          }
+        },
+        {
+          "name": "3. Submit M1",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"milestoneid\": \"M1FORMATIONDOCS\", \"founderid\": \"F1\", \"loan_id\": \"L1\", \"payload\": {} }"
+            },
+            "url": "http://localhost:3000/milestones/submit"
+          }
+        },
+        {
+          "name": "4. Submit M2",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"milestoneid\": \"M2BUSINESSBANKACCOUNT\", \"founderid\": \"F1\", \"loanid\": \"L1\", \"payload\": {} }"
+            },
+            "url": "http://localhost:3000/milestones/submit"
+          }
+        },
+        {
+          "name": "5. Governance Decision",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"loanid\": \"L1\", \"actiontype\": \"GOVERNANCEDECISIONKEEPZEROINTEREST\" }"
+            },
+            "url": "http://localhost:3000/governance/resolve"
+          }
+        },
+        {
+          "name": "6. Get Final Loan State",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/loans/L1"
+          }
+        }
+      ]
+    }
+  ]
+}
+`
+
+---
+
